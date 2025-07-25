@@ -1,9 +1,13 @@
+"use client";
+
 import type { YouTubeVideo } from "@/app/actions";
 import Image from "next/image";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
-import { Calendar, FileText, Tags, User, Image as ImageIcon } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { useToast } from "@/hooks/use-toast";
+import { Calendar, FileText, Tags, User, Image as ImageIcon, Clipboard } from "lucide-react";
 
 interface MetadataDisplayProps {
   data: YouTubeVideo;
@@ -11,29 +15,58 @@ interface MetadataDisplayProps {
 
 export function MetadataDisplay({ data }: MetadataDisplayProps) {
   const { snippet } = data;
+  const { toast } = useToast();
+
   const publishedDate = new Date(snippet.publishedAt).toLocaleDateString('en-US', {
     year: 'numeric',
     month: 'long',
     day: 'numeric',
   });
 
+  const handleCopy = () => {
+    const textToCopy = `
+Title: ${snippet.title}
+Channel: ${snippet.channelTitle}
+Published: ${publishedDate}
+
+Description:
+${snippet.description}
+
+Tags:
+${(snippet.tags || []).join(', ')}
+    `.trim();
+
+    navigator.clipboard.writeText(textToCopy);
+    toast({
+      title: "Copied to Clipboard",
+      description: "Video metadata has been copied successfully.",
+    });
+  };
+
   return (
     <Card className="w-full animate-fade-in shadow-lg">
       <CardHeader>
-        <CardTitle className="text-2xl font-bold tracking-tight">{snippet.title}</CardTitle>
-        <CardDescription>
-          <div className="flex flex-wrap items-center gap-x-4 gap-y-2 pt-2 text-sm text-muted-foreground">
-            <div className="flex items-center gap-2">
-              <User className="h-4 w-4" />
-              <span>{snippet.channelTitle}</span>
+        <div className="flex justify-between items-start gap-4">
+            <div className="flex-1">
+                <CardTitle className="text-2xl font-bold tracking-tight">{snippet.title}</CardTitle>
+                <CardDescription>
+                  <div className="flex flex-wrap items-center gap-x-4 gap-y-2 pt-2 text-sm text-muted-foreground">
+                    <div className="flex items-center gap-2">
+                      <User className="h-4 w-4" />
+                      <span>{snippet.channelTitle}</span>
+                    </div>
+                    <Separator orientation="vertical" className="h-4 hidden sm:block" />
+                    <div className="flex items-center gap-2">
+                      <Calendar className="h-4 w-4" />
+                      <span>Published on {publishedDate}</span>
+                    </div>
+                  </div>
+                </CardDescription>
             </div>
-            <Separator orientation="vertical" className="h-4 hidden sm:block" />
-            <div className="flex items-center gap-2">
-              <Calendar className="h-4 w-4" />
-              <span>Published on {publishedDate}</span>
-            </div>
-          </div>
-        </CardDescription>
+            <Button variant="outline" size="icon" onClick={handleCopy} aria-label="Copy metadata">
+                <Clipboard className="h-5 w-5" />
+            </Button>
+        </div>
       </CardHeader>
       <CardContent className="grid gap-8">
         <div>

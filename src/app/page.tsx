@@ -14,6 +14,14 @@ import { MetadataDisplay } from "@/components/metadata-display";
 import { LoadingSkeleton } from "@/components/loading-skeleton";
 import { WelcomeMessage } from "@/components/welcome-message";
 
+function AdBanner({ placement }: { placement: string }) {
+  return (
+    <div className="flex items-center justify-center w-full h-24 bg-muted/50 border border-dashed rounded-lg text-sm text-muted-foreground my-4">
+      Ad Placeholder ({placement})
+    </div>
+  );
+}
+
 export default function Home() {
   const [url, setUrl] = useState("");
   const [metadata, setMetadata] = useState<YouTubeVideo | null>(null);
@@ -68,7 +76,6 @@ export default function Home() {
 
   return (
     <div className="flex min-h-screen w-full flex-col items-center bg-background text-foreground">
-      {/* <!-- Top AdSense Banner --> */}
       <div className="w-full bg-card py-4 shadow-sm">
         <header className="container mx-auto flex items-center gap-3">
           <Youtube className="h-8 w-8 text-primary" />
@@ -79,6 +86,7 @@ export default function Home() {
       </div>
       
       <main className="container mx-auto flex w-full max-w-4xl flex-1 flex-col items-center px-4 py-8">
+        <AdBanner placement="Top Banner" />
         <Card className="w-full shadow-md">
           <CardHeader>
             <CardTitle className="text-xl">YouTube Video Inspector</CardTitle>
@@ -125,7 +133,7 @@ export default function Home() {
               <AlertDescription>
                 <p>The YouTube API key is missing. To use this application, you need to provide your own API key.</p>
                 <ol className="list-decimal pl-5 mt-2 space-y-1">
-                  <li>Create a file named <strong>.env.local</strong> in the root of your project. The filename must be exactly <strong>.env.local</strong>, not `.env.local.example` or any other variation.</li>
+                  <li>Create a file named <strong>.env.local</strong> in the root of your project. The filename must be exactly <strong>.env.local</strong>.</li>
                   <li>Add the following line to it: <pre className="my-2 p-2 bg-muted rounded-md text-sm"><code>YOUTUBE_API_KEY=YOUR_API_KEY_HERE</code></pre></li>
                   <li>Replace <strong>YOUR_API_KEY_HERE</strong> with your actual YouTube Data API v3 key.</li>
                   <li>Restart the application for the changes to take effect.</li>
@@ -137,9 +145,9 @@ export default function Home() {
           {metadata && !isPending && <MetadataDisplay data={metadata} />}
           {!isPending && !error && !metadata && <WelcomeMessage />}
         </div>
+        <AdBanner placement="Bottom Banner" />
       </main>
       
-      {/* <!-- Bottom AdSense Banner --> */}
       <footer className="w-full py-6 text-center text-muted-foreground text-sm">
         <p>Built by Shubham Gautam.</p>
       </footer>
