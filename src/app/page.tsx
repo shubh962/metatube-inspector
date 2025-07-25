@@ -8,7 +8,7 @@ import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { useToast } from "@/hooks/use-toast";
-import { AlertTriangle, Loader2, Search, Youtube } from "lucide-react";
+import { AlertTriangle, KeyRound, Loader2, Search, Youtube } from "lucide-react";
 
 import { MetadataDisplay } from "@/components/metadata-display";
 import { LoadingSkeleton } from "@/components/loading-skeleton";
@@ -43,16 +43,20 @@ export default function Home() {
       const result = await getYouTubeVideoMetadata(videoId);
       if (result.error) {
         setError(result.error);
-        toast({
-          variant: "destructive",
-          title: "Error fetching data",
-          description: result.error,
-        });
+        if (!result.error.includes("API key")) {
+          toast({
+            variant: "destructive",
+            title: "Error fetching data",
+            description: result.error,
+          });
+        }
       } else if (result.data) {
         setMetadata(result.data);
       }
     });
   };
+  
+  const isApiKeyMissing = error && error.includes("API key is missing");
 
   return (
     <div className="flex min-h-screen w-full flex-col items-center bg-background text-foreground">
@@ -99,11 +103,27 @@ export default function Home() {
 
         <div className="mt-8 w-full">
           {isPending && <LoadingSkeleton />}
-          {error && !isPending && (
+          {error && !isPending && !isApiKeyMissing && (
              <Alert variant="destructive" className="animate-fade-in">
                 <AlertTriangle className="h-4 w-4" />
                 <AlertTitle>An Error Occurred</AlertTitle>
                 <AlertDescription>{error}</AlertDescription>
+            </Alert>
+          )}
+          {isApiKeyMissing && (
+            <Alert variant="destructive" className="animate-fade-in">
+              <KeyRound className="h-4 w-4" />
+              <AlertTitle>Configuration Needed: YouTube API Key</AlertTitle>
+              <AlertDescription>
+                <p>The YouTube API key is missing. To use this application, you need to provide your own API key.</p>
+                <ol className="list-decimal pl-5 mt-2 space-y-1">
+                  <li>Create a file named <strong>.env.local</strong> in the root of your project.</li>
+                  <li>Add the following line to it: <pre className="my-2 p-2 bg-muted rounded-md text-sm"><code>YOUTUBE_API_KEY=YOUR_API_KEY_HERE</code></pre></li>
+                  <li>Replace <strong>YOUR_API_KEY_HERE</strong> with your actual YouTube Data API v3 key.</li>
+                  <li>Restart the application for the changes to take effect.</li>
+                </ol>
+                <p className="mt-2">For security, remember to restrict your API key in the Google Cloud Console to your domain.</p>
+              </AlertDescription>
             </Alert>
           )}
           {metadata && !isPending && <MetadataDisplay data={metadata} />}
@@ -114,9 +134,6 @@ export default function Home() {
       {/* <!-- Bottom AdSense Banner --> */}
       <footer className="w-full py-6 text-center text-muted-foreground text-sm">
         <p>Built with Next.js and Firebase Studio.</p>
-        <p>
-            For API key security, restrict it in Google Cloud Console to your domain.
-        </p>
       </footer>
     </div>
   );
