@@ -117,7 +117,7 @@ export default function Home() {
               <AlertDescription>
                 <p>The YouTube API key is missing. To use this application, you need to provide your own API key.</p>
                 <ol className="list-decimal pl-5 mt-2 space-y-1">
-                  <li>Create a file named <strong>.env.local</strong> in the root of your project.</li>
+                  <li>Create a file named <strong>.env.local</strong> in the root of your project. The filename must be exactly <strong>.env.local</strong>, not `.env.local.example` or any other variation.</li>
                   <li>Add the following line to it: <pre className="my-2 p-2 bg-muted rounded-md text-sm"><code>YOUTUBE_API_KEY=YOUR_API_KEY_HERE</code></pre></li>
                   <li>Replace <strong>YOUR_API_KEY_HERE</strong> with your actual YouTube Data API v3 key.</li>
                   <li>Restart the application for the changes to take effect.</li>
