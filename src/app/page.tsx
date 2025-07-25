@@ -8,12 +8,14 @@ import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { useToast } from "@/hooks/use-toast";
-import { AlertTriangle, KeyRound, Loader2, Search, Youtube } from "lucide-react";
+import { AlertTriangle, KeyRound, Loader2, Search, Youtube, Bot } from "lucide-react";
 
 import { MetadataDisplay } from "@/components/metadata-display";
 import { LoadingSkeleton } from "@/components/loading-skeleton";
 import { WelcomeMessage } from "@/components/welcome-message";
-
+import { extractYouTubeMetadata } from "@/ai/flows/youtube-metadata-flow";
+import type { YouTubeMetadataOutput } from "@/ai/schemas";
+import { JsonDisplay } from "@/components/json-display";
 
 export default function Home() {
   const [url, setUrl] = useState("");
@@ -21,24 +23,16 @@ export default function Home() {
   const [error, setError] = useState<string | null>(null);
   const [isPending, startTransition] = useTransition();
   const { toast } = useToast();
+  const [aiMetadata, setAiMetadata] = useState<YouTubeMetadataOutput | null>(null);
+  const [isAiPending, startAiTransition] = useTransition();
 
-  const handleSubmit = useCallback((event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
+  const resetState = () => {
     setError(null);
     setMetadata(null);
+    setAiMetadata(null);
+  }
 
-    const videoId = extractYouTubeVideoId(url);
-
-    if (!videoId) {
-      setError("Invalid YouTube URL. Please check the link and try again.");
-      toast({
-        variant: "destructive",
-        title: "Invalid URL",
-        description: "Could not extract a video ID from the provided URL.",
-      });
-      return;
-    }
-
+  const handleFetch = (videoId: string) => {
     startTransition(async () => {
       const result = await getYouTubeVideoMetadata(videoId);
       if (result.error) {
@@ -54,9 +48,47 @@ export default function Home() {
         setMetadata(result.data);
       }
     });
+  }
+
+  const handleAiFetch = (videoUrl: string) => {
+    startAiTransition(async () => {
+      try {
+        const result = await extractYouTubeMetadata({ youtubeUrl: videoUrl });
+        setAiMetadata(result);
+      } catch (e: any) {
+        setError(e.message || "An unexpected AI error occurred.");
+        toast({
+          variant: "destructive",
+          title: "AI Error",
+          description: e.message || "Could not process the request with AI.",
+        });
+      }
+    });
+  }
+
+  const handleSubmit = useCallback((event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    resetState();
+
+    const videoId = extractYouTubeVideoId(url);
+
+    if (!videoId) {
+      setError("Invalid YouTube URL. Please check the link and try again.");
+      toast({
+        variant: "destructive",
+        title: "Invalid URL",
+        description: "Could not extract a video ID from the provided URL.",
+      });
+      return;
+    }
+
+    handleFetch(videoId);
+    handleAiFetch(url);
+
   }, [url, toast]);
   
   const isApiKeyMissing = error && error.includes("API key is missing");
+  const isAnyPending = isPending || isAiPending;
 
   return (
     <div className="flex min-h-screen w-full flex-col items-center bg-background text-foreground">
@@ -85,25 +117,25 @@ export default function Home() {
                 placeholder="e.g., https://www.youtube.com/watch?v=dQw4w9WgXcQ"
                 value={url}
                 onChange={(e) => setUrl(e.target.value)}
-                disabled={isPending}
+                disabled={isAnyPending}
                 required
                 className="text-base"
               />
-              <Button type="submit" disabled={isPending || !url} className="sm:w-48">
-                {isPending ? (
+              <Button type="submit" disabled={isAnyPending || !url} className="sm:w-48">
+                {isAnyPending ? (
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                 ) : (
                   <Search className="mr-2 h-4 w-4" />
                 )}
-                {isPending ? "Extracting..." : "Extract"}
+                {isAnyPending ? "Extracting..." : "Extract"}
               </Button>
             </form>
           </CardContent>
         </Card>
 
-        <div className="mt-8 w-full">
-          {isPending && <LoadingSkeleton />}
-          {error && !isPending && !isApiKeyMissing && (
+        <div className="mt-8 w-full grid gap-8">
+          {isAnyPending && <LoadingSkeleton />}
+          {error && !isAnyPending && !isApiKeyMissing && (
              <Alert variant="destructive" className="animate-fade-in">
                 <AlertTriangle className="h-4 w-4" />
                 <AlertTitle>An Error Occurred</AlertTitle>
@@ -126,8 +158,9 @@ export default function Home() {
               </AlertDescription>
             </Alert>
           )}
-          {metadata && !isPending && <MetadataDisplay data={metadata} />}
-          {!isPending && !error && !metadata && <WelcomeMessage />}
+          {metadata && !isAnyPending && <MetadataDisplay data={metadata} />}
+          {aiMetadata && !isAnyPending && <JsonDisplay data={aiMetadata} />}
+          {!isAnyPending && !error && !metadata && <WelcomeMessage />}
         </div>
       </main>
       
