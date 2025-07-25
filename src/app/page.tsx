@@ -133,7 +133,7 @@ export default function Home() {
       
       {/* <!-- Bottom AdSense Banner --> */}
       <footer className="w-full py-6 text-center text-muted-foreground text-sm">
-        <p>Built with Next.js and Firebase Studio by Shubham Gautam.</p>
+        <p>Built by Shubham Gautam.</p>
       </footer>
     </div>
   );
