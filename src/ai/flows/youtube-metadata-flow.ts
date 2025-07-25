@@ -9,63 +9,28 @@ import { ai } from '@/ai/genkit';
 import { getYouTubeVideoMetadata } from '@/app/actions';
 import { extractYouTubeVideoId } from '@/lib/utils';
 import { YouTubeMetadataInputSchema, YouTubeMetadataOutputSchema, type YouTubeMetadataInput, type YouTubeMetadataOutput } from '@/ai/schemas';
-import { z } from 'zod';
-
-
-const getMetadataTool = ai.defineTool(
-    {
-        name: 'getYouTubeVideoMetadataTool',
-        description: 'Get metadata for a given YouTube video ID.',
-        inputSchema: z.object({ videoId: z.string() }),
-        outputSchema: z.any(),
-    },
-    async ({ videoId }) => {
-        const result = await getYouTubeVideoMetadata(videoId);
-        if (result.error) {
-            throw new Error(result.error);
-        }
-        return result.data;
-    }
-);
-
 
 const youtubeMetadataPrompt = ai.definePrompt({
     name: 'youtubeMetadataPrompt',
-    input: { schema: YouTubeMetadataInputSchema },
+    input: { schema: YouTubeMetadataOutputSchema },
     output: { schema: YouTubeMetadataOutputSchema },
-    tools: [getMetadataTool],
     prompt: `
-        You are a YouTube Metadata Extractor AI.
+        You are a YouTube Metadata Formatter AI.
 
-        Input: A valid YouTube video URL.
+        Your task is to receive video metadata and format it into a clean JSON object.
+        Ensure the output matches the requested schema precisely.
 
-        Task: Extract the following details using the YouTube Data API v3:
-        - Title of the video
-        - Description of the video
-        - Tags (if available)
-        - Channel name
-        - Published date
-        - High-resolution thumbnail URL
+        - For the 'thumbnail' field, use the highest resolution available from the input thumbnails.
+        - If 'tags' are missing or empty, provide an empty array.
 
-        Instructions:
-        - Use the 'videos' endpoint from YouTube Data API.
-        - Use 'part=snippet' to get all metadata.
-        - Return the output in clean JSON format as follows:
+        Here is the metadata:
 
-        {
-          "title": "...",
-          "description": "...",
-          "tags": ["...", "..."],
-          "channelTitle": "...",
-          "publishedAt": "...",
-          "thumbnail": "..."
-        }
-
-        If any field like 'tags' is missing, return an empty array for it.
-
-        Only respond with valid JSON, no extra explanation.
-
-        URL: {{{youtubeUrl}}}
+        Title: {{{title}}}
+        Description: {{{description}}}
+        Tags: {{{tags}}}
+        Channel: {{{channelTitle}}}
+        Published At: {{{publishedAt}}}
+        Thumbnail URL: {{{thumbnail}}}
     `,
 });
 
@@ -81,7 +46,24 @@ const youtubeMetadataFlow = ai.defineFlow(
             throw new Error("Could not extract video ID from URL.");
         }
         
-        const llmResponse = await youtubeMetadataPrompt(input);
+        const videoDetails = await getYouTubeVideoMetadata(videoId);
+
+        if (videoDetails.error || !videoDetails.data) {
+            throw new Error(videoDetails.error || "Failed to fetch video details.");
+        }
+
+        const snippet = videoDetails.data.snippet;
+        const thumbnail = snippet.thumbnails.maxres?.url || snippet.thumbnails.standard?.url || snippet.thumbnails.high.url;
+
+        const llmResponse = await youtubeMetadataPrompt({
+            title: snippet.title,
+            description: snippet.description,
+            tags: snippet.tags || [],
+            channelTitle: snippet.channelTitle,
+            publishedAt: snippet.publishedAt,
+            thumbnail: thumbnail
+        });
+
         const output = llmResponse.output;
         
         if (!output) {
