@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useTransition } from "react";
+import { useState, useTransition, useCallback } from "react";
 import { getYouTubeVideoMetadata, type YouTubeVideo } from "@/app/actions";
 import { extractYouTubeVideoId } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -22,7 +22,7 @@ export default function Home() {
   const [isPending, startTransition] = useTransition();
   const { toast } = useToast();
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = useCallback((event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setError(null);
     setMetadata(null);
@@ -54,7 +54,7 @@ export default function Home() {
         setMetadata(result.data);
       }
     });
-  };
+  }, [url, toast]);
   
   const isApiKeyMissing = error && error.includes("API key is missing");
 
@@ -89,7 +89,7 @@ export default function Home() {
                 required
                 className="text-base"
               />
-              <Button type="submit" disabled={isPending} className="sm:w-48">
+              <Button type="submit" disabled={isPending || !url} className="sm:w-48">
                 {isPending ? (
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                 ) : (
@@ -133,7 +133,7 @@ export default function Home() {
       
       {/* <!-- Bottom AdSense Banner --> */}
       <footer className="w-full py-6 text-center text-muted-foreground text-sm">
-        <p>Built with Next.js and Firebase Studio.</p>
+        <p>Built with Next.js and Firebase Studio by Shubham Gautam.</p>
       </footer>
     </div>
   );
