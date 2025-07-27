@@ -4,6 +4,7 @@ import { Toaster } from "@/components/ui/toaster"
 import { Inter } from 'next/font/google'
 import { cn } from '@/lib/utils';
 import { ThemeProvider } from '@/components/theme-provider';
+import { SocialBarAd } from '@/components/social-bar-ad';
 
 const inter = Inter({ subsets: ['latin'], variable: "--font-sans" })
 
@@ -32,6 +33,7 @@ export default function RootLayout({
           {children}
           <Toaster />
         </ThemeProvider>
+        <SocialBarAd />
       </body>
     </html>
   );
