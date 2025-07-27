@@ -72,7 +72,7 @@ export default function Home() {
 
   return (
     <SidebarProvider>
-    <div className="flex min-h-screen w-full flex-col bg-background text-foreground">
+    <div className="flex min-h-screen w-full flex-col bg-muted/40">
       <Sidebar side="left" collapsible="icon" className="border-r">
         <SidebarHeader>
           <div className="flex h-14 items-center gap-2 p-2 justify-center group-data-[collapsible=icon]:hidden">
@@ -101,8 +101,8 @@ export default function Home() {
         </SidebarContent>
       </Sidebar>
       
-      <div className="flex flex-col flex-1 md:pl-[calc(var(--sidebar-width-icon)_-_1rem)]">
-        <header className="sticky top-0 z-10 flex h-14 items-center gap-4 border-b bg-background/80 backdrop-blur-sm px-4 lg:h-[60px] lg:px-6">
+      <div className="flex flex-col sm:gap-4 sm:py-4 sm:pl-14">
+        <header className="sticky top-0 z-30 flex h-14 items-center gap-4 border-b bg-background/80 backdrop-blur-sm px-4 sm:static sm:h-auto sm:border-0 sm:bg-transparent sm:px-6">
             <SidebarTrigger className="md:hidden"/>
             <h1 className="text-lg font-semibold md:text-xl">
               YouTube Metadata Inspector
@@ -111,14 +111,11 @@ export default function Home() {
               <ThemeToggle />
             </div>
         </header>
-        <main className="flex flex-1 flex-col gap-4 p-4 lg:gap-6 lg:p-6">
-          <div className="flex items-center">
-            <h1 className="text-lg font-semibold md:text-2xl">Extract Metadata</h1>
-          </div>
+        <main className="grid flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8">
           <div
-            className="flex flex-1 items-center justify-center rounded-lg border border-dashed shadow-sm"
+            className="flex flex-1 items-center justify-center rounded-lg border border-dashed shadow-sm bg-background"
           >
-            <div className="flex flex-col items-center gap-1 text-center w-full max-w-2xl p-4 md:p-8">
+            <div className="flex flex-col items-center gap-1 text-center w-full max-w-4xl p-4 md:p-8">
               {!metadata && !isPending && !error &&
                 <WelcomeMessage onUrlSubmit={(url) => {
                   setUrl(url);
