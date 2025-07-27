@@ -7,7 +7,8 @@ import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
-import { Calendar, FileText, Tags, User, Image as ImageIcon, Clipboard } from "lucide-react";
+import { Calendar, FileText, Tags, User, Image as ImageIcon, Clipboard, Check } from "lucide-react";
+import React from "react";
 
 interface MetadataDisplayProps {
   data: YouTubeVideo;
@@ -16,6 +17,7 @@ interface MetadataDisplayProps {
 export function MetadataDisplay({ data }: MetadataDisplayProps) {
   const { snippet } = data;
   const { toast } = useToast();
+  const [copied, setCopied] = React.useState(false);
 
   const publishedDate = new Date(snippet.publishedAt).toLocaleDateString('en-US', {
     year: 'numeric',
@@ -37,20 +39,22 @@ ${(snippet.tags || []).join(', ')}
     `.trim();
 
     navigator.clipboard.writeText(textToCopy);
+    setCopied(true);
     toast({
       title: "Copied to Clipboard",
       description: "Video metadata has been copied successfully.",
     });
+    setTimeout(() => setCopied(false), 2000);
   };
 
   return (
-    <Card className="w-full animate-fade-in shadow-lg">
+    <Card className="w-full animate-fade-in shadow-lg border-primary/20">
       <CardHeader>
         <div className="flex justify-between items-start gap-4">
             <div className="flex-1">
                 <CardTitle className="text-2xl font-bold tracking-tight">{snippet.title}</CardTitle>
                 <CardDescription>
-                  <div className="flex flex-wrap items-center gap-x-4 gap-y-2 pt-2 text-sm text-muted-foreground">
+                  <div className="flex flex-wrap items-center gap-x-4 gap-y-2 pt-2 text-base text-muted-foreground">
                     <div className="flex items-center gap-2">
                       <User className="h-4 w-4" />
                       <span>{snippet.channelTitle}</span>
@@ -64,13 +68,13 @@ ${(snippet.tags || []).join(', ')}
                 </CardDescription>
             </div>
             <Button variant="outline" size="icon" onClick={handleCopy} aria-label="Copy metadata">
-                <Clipboard className="h-5 w-5" />
+                {copied ? <Check className="h-5 w-5 text-green-500" /> : <Clipboard className="h-5 w-5" />}
             </Button>
         </div>
       </CardHeader>
-      <CardContent className="grid gap-8">
+      <CardContent className="grid gap-y-8">
         <div>
-            <h3 className="text-lg font-semibold mb-3 flex items-center gap-2"><ImageIcon className="h-5 w-5" /> Thumbnails</h3>
+            <h3 className="text-lg font-semibold mb-4 flex items-center gap-2"><ImageIcon className="h-5 w-5" /> Thumbnails</h3>
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
                 {snippet.thumbnails.maxres && <ThumbnailImage title="Max-Res" src={snippet.thumbnails.maxres.url} />}
                 {snippet.thumbnails.standard && <ThumbnailImage title="Standard" src={snippet.thumbnails.standard.url} />}
@@ -82,10 +86,10 @@ ${(snippet.tags || []).join(', ')}
         
         {snippet.description && (
           <div>
-            <h3 className="text-lg font-semibold mb-2 flex items-center gap-2">
+            <h3 className="text-lg font-semibold mb-3 flex items-center gap-2">
               <FileText className="h-5 w-5" /> Description
             </h3>
-            <div className="max-h-60 overflow-y-auto whitespace-pre-wrap rounded-md bg-muted/50 p-4 text-sm leading-relaxed text-card-foreground/80">
+            <div className="max-h-72 overflow-y-auto whitespace-pre-wrap rounded-md border bg-muted/50 p-4 text-base leading-relaxed text-card-foreground/90 font-mono text-sm">
               {snippet.description}
             </div>
           </div>
@@ -93,12 +97,12 @@ ${(snippet.tags || []).join(', ')}
         
         {snippet.tags && snippet.tags.length > 0 && (
           <div>
-            <h3 className="text-lg font-semibold mb-2 flex items-center gap-2">
+            <h3 className="text-lg font-semibold mb-3 flex items-center gap-2">
               <Tags className="h-5 w-5" /> Tags
             </h3>
             <div className="flex flex-wrap gap-2">
               {snippet.tags.map(tag => (
-                <Badge key={tag} variant="secondary" className="font-normal">{tag}</Badge>
+                <Badge key={tag} variant="secondary" className="font-medium text-sm">{tag}</Badge>
               ))}
             </div>
           </div>
@@ -110,7 +114,7 @@ ${(snippet.tags || []).join(', ')}
 
 function ThumbnailImage({ src, title }: { src: string; title: string }) {
     return (
-        <div className="group relative overflow-hidden rounded-lg">
+        <a href={src} target="_blank" rel="noopener noreferrer" className="group relative overflow-hidden rounded-lg block">
             <Image
                 src={src}
                 alt={`${title} thumbnail`}
@@ -119,10 +123,10 @@ function ThumbnailImage({ src, title }: { src: string; title: string }) {
                 className="w-full h-auto object-cover border-2 border-transparent group-hover:border-primary group-hover:scale-105 transition-all duration-300"
                 unoptimized
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+            <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent group-hover:from-black/50 transition-colors"></div>
             <div className="absolute bottom-0 left-0 right-0 p-2 text-white text-xs text-center font-semibold">
                 {title}
             </div>
-        </div>
+        </a>
     )
 }

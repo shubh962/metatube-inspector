@@ -24,9 +24,10 @@ function AdBanner({ placement }: { placement: string }) {
 
   useEffect(() => {
     if (isClient && adRef.current && !adRef.current.hasChildNodes()) {
+      const script = document.createElement('script');
+      script.type = 'text/javascript';
+
       if (placement === 'Top Banner') {
-        const script = document.createElement('script');
-        script.type = 'text/javascript';
         script.innerHTML = `
           atOptions = {
             'key' : 'ef44c02832896a1dec92310fee06f799',
@@ -36,16 +37,12 @@ function AdBanner({ placement }: { placement: string }) {
             'params' : {}
           };
         `;
-        
         const script2 = document.createElement('script');
         script2.type = 'text/javascript';
         script2.src = '//www.highperformanceformat.com/ef44c02832896a1dec92310fee06f799/invoke.js';
-
         adRef.current.appendChild(script);
         adRef.current.appendChild(script2);
       } else if (placement === 'Bottom Banner') {
-        const script = document.createElement('script');
-        script.type = 'text/javascript';
         script.innerHTML = `
           atOptions = {
             'key' : 'ef44c02832896a1dec92310fee06f799',
@@ -55,11 +52,9 @@ function AdBanner({ placement }: { placement: string }) {
             'params' : {}
           };
         `;
-        
         const script2 = document.createElement('script');
         script2.type = 'text/javascript';
         script2.src = '//www.highperformanceformat.com/ef44c02832896a1dec92310fee06f799/invoke.js';
-
         adRef.current.appendChild(script);
         adRef.current.appendChild(script2);
       }
@@ -71,7 +66,7 @@ function AdBanner({ placement }: { placement: string }) {
     : {};
 
   return (
-    <div className="flex items-center justify-center my-4">
+    <div className="flex items-center justify-center my-6">
       <div ref={adRef} style={adStyles} />
     </div>
   );
@@ -131,22 +126,22 @@ export default function Home() {
 
   return (
     <div className="flex min-h-screen w-full flex-col items-center bg-background text-foreground">
-      <div className="w-full bg-card py-4 shadow-sm">
-        <header className="container mx-auto flex items-center gap-3">
-          <Youtube className="h-8 w-8 text-primary" />
-          <h1 className="text-2xl font-bold text-primary tracking-tight">
+      <header className="w-full border-b bg-card">
+        <div className="container mx-auto flex h-16 items-center gap-4 px-4 sm:px-6 lg:px-8">
+          <Youtube className="h-7 w-7 text-primary" />
+          <h1 className="text-xl font-bold text-card-foreground tracking-tight">
             MetaTube Inspector
           </h1>
-        </header>
-      </div>
+        </div>
+      </header>
       
       <main className="container mx-auto flex w-full max-w-4xl flex-1 flex-col items-center px-4 py-8">
         <AdBanner placement="Top Banner" />
-        <Card className="w-full shadow-md">
+        <Card className="w-full shadow-lg border-primary/20">
           <CardHeader>
-            <CardTitle className="text-xl">YouTube Video Inspector</CardTitle>
+            <CardTitle className="text-2xl">YouTube Video Inspector</CardTitle>
             <CardDescription>
-              Enter a YouTube video URL to extract its title, description, tags, thumbnails and more.
+              Enter a YouTube video URL to extract its title, description, tags, and more.
             </CardDescription>
           </CardHeader>
           <CardContent>
@@ -158,9 +153,9 @@ export default function Home() {
                 onChange={(e) => setUrl(e.target.value)}
                 disabled={isPending}
                 required
-                className="text-base"
+                className="h-11 text-base"
               />
-              <Button type="submit" disabled={isPending || !url} className="sm:w-48">
+              <Button type="submit" disabled={isPending || !url} className="sm:w-48 h-11">
                 {isPending ? (
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                 ) : (
