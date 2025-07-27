@@ -3,7 +3,7 @@ import { Card, CardHeader, CardContent } from "@/components/ui/card"
 
 export function LoadingSkeleton() {
   return (
-    <Card className="w-full animate-fade-in">
+    <Card className="w-full animate-fade-in border-0 shadow-none">
       <CardHeader>
         <Skeleton className="h-8 w-3/4 rounded-md" />
         <div className="flex items-center gap-4 mt-2">

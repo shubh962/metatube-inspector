@@ -2,13 +2,13 @@
 
 import type { YouTubeVideo } from "@/app/actions";
 import Image from "next/image";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
-import { Calendar, FileText, Tags, User, Image as ImageIcon, Clipboard, Check } from "lucide-react";
+import { Calendar, FileText, Tags, User, Image as ImageIcon, Clipboard, Check, ChevronDown } from "lucide-react";
 import React from "react";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import { Card } from "@/components/ui/card";
 
 interface MetadataDisplayProps {
   data: YouTubeVideo;
@@ -48,66 +48,70 @@ ${(snippet.tags || []).join(', ')}
   };
 
   return (
-    <Card className="w-full animate-fade-in shadow-lg border-primary/20">
-      <CardHeader>
-        <div className="flex justify-between items-start gap-4">
-            <div className="flex-1">
-                <CardTitle className="text-2xl font-bold tracking-tight">{snippet.title}</CardTitle>
-                <CardDescription>
-                  <div className="flex flex-wrap items-center gap-x-4 gap-y-2 pt-2 text-base text-muted-foreground">
-                    <div className="flex items-center gap-2">
-                      <User className="h-4 w-4" />
-                      <span>{snippet.channelTitle}</span>
-                    </div>
-                    <Separator orientation="vertical" className="h-4 hidden sm:block" />
-                    <div className="flex items-center gap-2">
-                      <Calendar className="h-4 w-4" />
-                      <span>Published on {publishedDate}</span>
-                    </div>
-                  </div>
-                </CardDescription>
-            </div>
-            <Button variant="outline" size="icon" onClick={handleCopy} aria-label="Copy metadata">
-                {copied ? <Check className="h-5 w-5 text-green-500" /> : <Clipboard className="h-5 w-5" />}
-            </Button>
-        </div>
-      </CardHeader>
-      <CardContent className="grid gap-y-8">
-        <div>
-            <h3 className="text-lg font-semibold mb-4 flex items-center gap-2"><ImageIcon className="h-5 w-5" /> Thumbnails</h3>
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
+    <Card className="w-full animate-fade-in shadow-none border-0 text-left">
+      <div className="flex justify-between items-start gap-4 mb-6">
+          <div className="flex-1">
+              <h2 className="text-2xl font-bold tracking-tight">{snippet.title}</h2>
+              <div className="flex flex-wrap items-center gap-x-4 gap-y-2 pt-2 text-base text-muted-foreground">
+                <div className="flex items-center gap-2">
+                  <User className="h-4 w-4" />
+                  <span>{snippet.channelTitle}</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <Calendar className="h-4 w-4" />
+                  <span>{publishedDate}</span>
+                </div>
+              </div>
+          </div>
+          <Button variant="outline" size="icon" onClick={handleCopy} aria-label="Copy metadata">
+              {copied ? <Check className="h-5 w-5 text-green-500" /> : <Clipboard className="h-5 w-5" />}
+          </Button>
+      </div>
+
+      <Accordion type="multiple" defaultValue={["item-1", "item-2", "item-3", "item-4"]} className="w-full">
+        <AccordionItem value="item-1">
+          <AccordionTrigger>
+             <h3 className="text-lg font-semibold flex items-center gap-2"><ImageIcon className="h-5 w-5" /> Thumbnails</h3>
+          </AccordionTrigger>
+          <AccordionContent>
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 pt-4">
                 {snippet.thumbnails.maxres && <ThumbnailImage title="Max-Res" src={snippet.thumbnails.maxres.url} />}
                 {snippet.thumbnails.standard && <ThumbnailImage title="Standard" src={snippet.thumbnails.standard.url} />}
                 <ThumbnailImage title="High" src={snippet.thumbnails.high.url} />
                 <ThumbnailImage title="Medium" src={snippet.thumbnails.medium.url} />
                 <ThumbnailImage title="Default" src={snippet.thumbnails.default.url} />
             </div>
-        </div>
+          </AccordionContent>
+        </AccordionItem>
         
         {snippet.description && (
-          <div>
-            <h3 className="text-lg font-semibold mb-3 flex items-center gap-2">
-              <FileText className="h-5 w-5" /> Description
-            </h3>
-            <div className="max-h-72 overflow-y-auto whitespace-pre-wrap rounded-md border bg-muted/50 p-4 text-base leading-relaxed text-card-foreground/90 font-mono text-sm">
+        <AccordionItem value="item-2">
+          <AccordionTrigger>
+             <h3 className="text-lg font-semibold flex items-center gap-2"><FileText className="h-5 w-5" /> Description</h3>
+          </AccordionTrigger>
+          <AccordionContent>
+             <div className="max-h-72 overflow-y-auto whitespace-pre-wrap rounded-md bg-muted/50 p-4 text-base leading-relaxed text-card-foreground/90 font-mono text-sm mt-2">
               {snippet.description}
             </div>
-          </div>
+          </AccordionContent>
+        </AccordionItem>
         )}
         
         {snippet.tags && snippet.tags.length > 0 && (
-          <div>
-            <h3 className="text-lg font-semibold mb-3 flex items-center gap-2">
-              <Tags className="h-5 w-5" /> Tags
-            </h3>
-            <div className="flex flex-wrap gap-2">
+        <AccordionItem value="item-3">
+          <AccordionTrigger>
+             <h3 className="text-lg font-semibold flex items-center gap-2"><Tags className="h-5 w-5" /> Tags</h3>
+          </AccordionTrigger>
+          <AccordionContent>
+            <div className="flex flex-wrap gap-2 pt-4">
               {snippet.tags.map(tag => (
                 <Badge key={tag} variant="secondary" className="font-medium text-sm">{tag}</Badge>
               ))}
             </div>
-          </div>
+          </AccordionContent>
+        </AccordionItem>
         )}
-      </CardContent>
+      </Accordion>
     </Card>
   );
 }
