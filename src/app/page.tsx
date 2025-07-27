@@ -15,6 +15,26 @@ import { LoadingSkeleton } from "@/components/loading-skeleton";
 import { WelcomeMessage } from "@/components/welcome-message";
 
 function AdBanner({ placement }: { placement: string }) {
+  if (placement === 'Top Banner') {
+    const adScript = `
+      atOptions = {
+        'key' : 'ef44c02832896a1dec92310fee06f799',
+        'format' : 'iframe',
+        'height' : 90,
+        'width' : 728,
+        'params' : {}
+      };
+    `;
+    return (
+      <div className="flex items-center justify-center my-4">
+        <div style={{ width: '728px', height: '90px' }}>
+          <script dangerouslySetInnerHTML={{ __html: adScript }} />
+          <script type="text/javascript" src="//www.highperformanceformat.com/ef44c02832896a1dec92310fee06f799/invoke.js"></script>
+        </div>
+      </div>
+    );
+  }
+  
   return (
     <div className="flex items-center justify-center w-full h-24 bg-muted/50 border border-dashed rounded-lg text-sm text-muted-foreground my-4">
       Ad Placeholder ({placement})
