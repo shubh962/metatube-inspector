@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useTransition, useCallback } from "react";
+import { useState, useTransition, useCallback, useEffect } from "react";
 import { getYouTubeVideoMetadata, type YouTubeVideo } from "@/app/actions";
 import { extractYouTubeVideoId } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -15,6 +15,20 @@ import { LoadingSkeleton } from "@/components/loading-skeleton";
 import { WelcomeMessage } from "@/components/welcome-message";
 
 function AdBanner({ placement }: { placement: string }) {
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
+  if (!isClient) {
+    return (
+       <div className="flex items-center justify-center w-full h-24 my-4">
+          <div style={{ width: '728px', height: '90px' }} className="bg-muted/50 border border-dashed rounded-lg" />
+       </div>
+    );
+  }
+
   if (placement === 'Top Banner') {
     const adScript = `
       atOptions = {
