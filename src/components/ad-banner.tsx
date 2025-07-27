@@ -1,6 +1,7 @@
 
 import { Card, CardContent } from "@/components/ui/card";
 import { Megaphone } from "lucide-react";
+import Script from "next/script";
 
 export function AdBanner() {
   return (
