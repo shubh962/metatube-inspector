@@ -69,8 +69,8 @@ export default function Home() {
 
   return (
     <SidebarProvider>
-    <div className="flex min-h-screen w-full flex-col bg-muted/40 dark:bg-background">
-      <Sidebar side="left" collapsible="icon" className="border-r bg-background dark:bg-sidebar">
+    <div className="flex min-h-screen w-full flex-col bg-muted/40">
+      <Sidebar side="left" collapsible="icon" className="border-r bg-sidebar text-sidebar-foreground">
         <SidebarHeader className="p-2 justify-center items-center">
             <Link href="/" className="flex items-center gap-2 group-data-[collapsible=icon]:justify-center">
              <Youtube className="h-7 w-7 text-primary" />
