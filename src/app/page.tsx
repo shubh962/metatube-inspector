@@ -11,6 +11,7 @@ import { MetadataDisplay } from "@/components/metadata-display";
 import { LoadingSkeleton } from "@/components/loading-skeleton";
 import { WelcomeMessage } from "@/components/welcome-message";
 import { ThemeToggle } from "@/components/theme-toggle";
+import { AdBanner } from "@/components/ad-banner";
 
 export default function Home() {
   const [url, setUrl] = useState("");
@@ -65,7 +66,7 @@ export default function Home() {
   const showWelcome = !metadata && !isPending && !error;
 
   return (
-    <div className="flex min-h-screen w-full flex-col items-center bg-muted/40 p-4 sm:p-6 md:p-8">
+    <div className="flex min-h-screen w-full flex-col items-center bg-background p-4 sm:p-6 md:p-8">
       <header className="w-full max-w-6xl flex items-center justify-between pb-8">
         <h1 className="text-2xl font-bold text-foreground">
           MetaTube Inspector
@@ -99,6 +100,9 @@ export default function Home() {
         )}
         {metadata && !isPending && <MetadataDisplay data={metadata} onNewUrl={() => { setMetadata(null); setUrl(""); }} />}
       </main>
+      <footer className="w-full max-w-6xl mt-8">
+        <AdBanner />
+      </footer>
     </div>
   );
 }
