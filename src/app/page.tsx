@@ -48,17 +48,17 @@ function AdBanner({ placement }: { placement: string }) {
         script.type = 'text/javascript';
         script.innerHTML = `
           atOptions = {
-            'key' : '161acaef8f92b0bdf6063c0160c1cf73',
+            'key' : 'ef44c02832896a1dec92310fee06f799',
             'format' : 'iframe',
-            'height' : 60,
-            'width' : 468,
+            'height' : 90,
+            'width' : 728,
             'params' : {}
           };
         `;
         
         const script2 = document.createElement('script');
         script2.type = 'text/javascript';
-        script2.src = '//www.highperformanceformat.com/161acaef8f92b0bdf6063c0160c1cf73/invoke.js';
+        script2.src = '//www.highperformanceformat.com/ef44c02832896a1dec92310fee06f799/invoke.js';
 
         adRef.current.appendChild(script);
         adRef.current.appendChild(script2);
@@ -66,9 +66,9 @@ function AdBanner({ placement }: { placement: string }) {
     }
   }, [isClient, placement]);
 
-  const adStyles = placement === 'Top Banner' 
+  const adStyles = placement === 'Top Banner' || placement === 'Bottom Banner'
     ? { width: '728px', height: '90px' } 
-    : { width: '468px', height: '60px' };
+    : {};
 
   return (
     <div className="flex items-center justify-center my-4">
