@@ -1,7 +1,3 @@
-// app/page.tsx
-
-"use client";
-
 import { useState, useTransition, useCallback } from "react";
 import { getYouTubeVideoMetadata, type YouTubeVideo } from "@/app/actions";
 import { extractYouTubeVideoId } from "@/lib/utils";
