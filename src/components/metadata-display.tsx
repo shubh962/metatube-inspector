@@ -5,7 +5,7 @@ import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
-import { Calendar, FileText, Tags, User, Image as ImageIcon, Clipboard, Check, ChevronDown, RefreshCcw } from "lucide-react";
+import { Calendar, FileText, Tags, User, Image as ImageIcon, Clipboard, Check, RefreshCcw } from "lucide-react";
 import React from "react";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
@@ -97,7 +97,7 @@ ${(snippet.tags || []).join(', ')}
                 <h3 className="text-lg font-semibold flex items-center gap-2"><FileText className="h-5 w-5" /> Description</h3>
             </AccordionTrigger>
             <AccordionContent>
-                <div className="max-h-72 overflow-y-auto whitespace-pre-wrap rounded-md bg-muted/50 p-4 text-base leading-relaxed text-card-foreground/90 font-mono text-sm mt-2">
+                <div className="max-h-72 overflow-y-auto whitespace-pre-wrap rounded-md bg-muted/50 p-4 text-card-foreground/90 font-mono text-sm mt-2">
                 {snippet.description}
                 </div>
             </AccordionContent>

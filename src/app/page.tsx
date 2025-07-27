@@ -4,12 +4,9 @@
 import { useState, useTransition, useCallback } from "react";
 import { getYouTubeVideoMetadata, type YouTubeVideo } from "@/app/actions";
 import { extractYouTubeVideoId } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { useToast } from "@/hooks/use-toast";
-import { AlertTriangle, KeyRound, Loader2, Search, Youtube, UploadCloud, History, Settings, Home as HomeIcon } from "lucide-react";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { AlertTriangle, KeyRound, Youtube, History, Settings, Home as HomeIcon } from "lucide-react";
 import Link from 'next/link';
 
 import { MetadataDisplay } from "@/components/metadata-display";
@@ -68,6 +65,7 @@ export default function Home() {
   }, [toast]);
   
   const isApiKeyMissing = error && error.includes("API key is missing");
+  const showWelcome = !metadata && !isPending && !error;
 
   return (
     <SidebarProvider>
@@ -114,10 +112,9 @@ export default function Home() {
         </header>
         <main className="grid flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8">
             <div className="mx-auto grid w-full max-w-6xl gap-2">
-                {!metadata && !isPending && !error &&
+                {showWelcome &&
                     <WelcomeMessage onUrlSubmit={handleSubmit} />
                 }
-
                 {isPending && <LoadingSkeleton />}
                 {error && !isPending && !isApiKeyMissing && (
                     <Alert variant="destructive" className="animate-fade-in w-full">
@@ -142,7 +139,7 @@ export default function Home() {
                     </AlertDescription>
                     </Alert>
                 )}
-                {metadata && !isPending && <MetadataDisplay data={metadata} onNewUrl={() => setMetadata(null)} />}
+                {metadata && !isPending && <MetadataDisplay data={metadata} onNewUrl={() => { setMetadata(null); setUrl(""); }} />}
             </div>
         </main>
       </div>
