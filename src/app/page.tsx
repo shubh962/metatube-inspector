@@ -126,10 +126,10 @@ export default function Home() {
 
   return (
     <div className="flex min-h-screen w-full flex-col items-center bg-background text-foreground">
-      <header className="w-full border-b bg-card">
+      <header className="w-full border-b bg-card text-card-foreground">
         <div className="container mx-auto flex h-16 items-center gap-4 px-4 sm:px-6 lg:px-8">
-          <Youtube className="h-7 w-7 text-primary" />
-          <h1 className="text-xl font-bold text-card-foreground tracking-tight">
+          <Youtube className="h-7 w-7" />
+          <h1 className="text-xl font-bold tracking-tight">
             MetaTube Inspector
           </h1>
         </div>
@@ -137,7 +137,7 @@ export default function Home() {
       
       <main className="container mx-auto flex w-full max-w-4xl flex-1 flex-col items-center px-4 py-8">
         <AdBanner placement="Top Banner" />
-        <Card className="w-full shadow-lg border-primary/20">
+        <Card className="w-full shadow-lg border-primary/20 bg-card/80 backdrop-blur-sm">
           <CardHeader>
             <CardTitle className="text-2xl">YouTube Video Inspector</CardTitle>
             <CardDescription>
