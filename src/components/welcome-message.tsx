@@ -20,9 +20,9 @@ export function WelcomeMessage({ onUrlSubmit }: WelcomeMessageProps) {
 
   return (
     <div className="w-full animate-fade-in flex items-center justify-center py-12">
-        <Card className="w-full max-w-2xl shadow-sm text-center">
+        <Card className="w-full max-w-2xl shadow-sm text-center border-0 bg-transparent">
             <CardHeader>
-                <div className="mx-auto bg-primary/10 p-4 rounded-full mb-4">
+                <div className="mx-auto bg-primary/10 p-4 rounded-full mb-4 w-fit">
                   <Youtube className="h-12 w-12 text-primary" />
                 </div>
                 <CardTitle className="text-3xl font-bold">Welcome to MetaTube Inspector</CardTitle>

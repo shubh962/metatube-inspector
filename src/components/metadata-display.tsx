@@ -49,7 +49,7 @@ ${(snippet.tags || []).join(', ')}
   };
 
   return (
-    <Card className="w-full animate-fade-in shadow-sm border text-left bg-card">
+    <Card className="w-full max-w-4xl animate-fade-in shadow-sm border text-left bg-card">
       <CardHeader className="flex flex-row items-start justify-between gap-4">
           <div className="flex-1">
               <h2 className="text-2xl font-bold tracking-tight">{snippet.title}</h2>
