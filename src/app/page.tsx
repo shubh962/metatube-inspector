@@ -105,10 +105,6 @@ export default function Home() {
         )}
         {metadata && !isPending && <MetadataDisplay data={metadata} onNewUrl={() => { setMetadata(null); setUrl(""); }} />}
       </main>
-
-      <footer className="w-full max-w-6xl mt-8">
-        <AdScript />
-      </footer>
     </div>
   );
 }
