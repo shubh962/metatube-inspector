@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useTransition, useCallback, useEffect } from "react";
+import { useState, useTransition, useCallback, useEffect, useRef } from "react";
 import { getYouTubeVideoMetadata, type YouTubeVideo } from "@/app/actions";
 import { extractYouTubeVideoId } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -15,36 +15,43 @@ import { LoadingSkeleton } from "@/components/loading-skeleton";
 import { WelcomeMessage } from "@/components/welcome-message";
 
 function AdBanner({ placement }: { placement: string }) {
+  const adRef = useRef<HTMLDivElement>(null);
   const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
     setIsClient(true);
   }, []);
 
-  if (!isClient) {
-    return (
-       <div className="flex items-center justify-center w-full h-24 my-4">
-          <div style={{ width: '728px', height: '90px' }} className="bg-muted/50 border border-dashed rounded-lg" />
-       </div>
-    );
-  }
+  useEffect(() => {
+    if (isClient && placement === 'Top Banner' && adRef.current) {
+      if (adRef.current.children.length > 0) {
+        return; // Script already loaded
+      }
+      const script = document.createElement('script');
+      script.type = 'text/javascript';
+      script.innerHTML = `
+        atOptions = {
+          'key' : 'ef44c02832896a1dec92310fee06f799',
+          'format' : 'iframe',
+          'height' : 90,
+          'width' : 728,
+          'params' : {}
+        };
+      `;
+      
+      const script2 = document.createElement('script');
+      script2.type = 'text/javascript';
+      script2.src = '//www.highperformanceformat.com/ef44c02832896a1dec92310fee06f799/invoke.js';
+
+      adRef.current.appendChild(script);
+      adRef.current.appendChild(script2);
+    }
+  }, [isClient, placement]);
 
   if (placement === 'Top Banner') {
-    const adScript = `
-      atOptions = {
-        'key' : 'ef44c02832896a1dec92310fee06f799',
-        'format' : 'iframe',
-        'height' : 90,
-        'width' : 728,
-        'params' : {}
-      };
-    `;
     return (
       <div className="flex items-center justify-center my-4">
-        <div style={{ width: '728px', height: '90px' }}>
-          <script dangerouslySetInnerHTML={{ __html: adScript }} />
-          <script type="text/javascript" src="//www.highperformanceformat.com/ef44c02832896a1dec92310fee06f799/invoke.js"></script>
-        </div>
+        <div ref={adRef} style={{ width: '728px', height: '90px' }} />
       </div>
     );
   }
