@@ -24,9 +24,11 @@ function AdBanner({ placement }: { placement: string }) {
 
   useEffect(() => {
     if (isClient && adRef.current) {
-      if (adRef.current.children.length > 0) {
-        return; // Script already loaded
+      // Clear previous ad content if any
+      while (adRef.current.firstChild) {
+        adRef.current.removeChild(adRef.current.firstChild);
       }
+
       const script = document.createElement('script');
       script.type = 'text/javascript';
       script.innerHTML = `
@@ -48,7 +50,6 @@ function AdBanner({ placement }: { placement: string }) {
     }
   }, [isClient, placement]);
 
-  // For now, render the same ad for both top and bottom
   return (
     <div className="flex items-center justify-center my-4">
       <div ref={adRef} style={{ width: '728px', height: '90px' }} />
