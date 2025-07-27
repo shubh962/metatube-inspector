@@ -79,21 +79,6 @@ export default function Home() {
         </SidebarHeader>
         <SidebarContent className="p-2">
           <SidebarMenu>
-            <SidebarMenuItem>
-              <SidebarMenuButton asChild isActive tooltip="Home">
-                <Link href="#"><HomeIcon /></Link>
-              </SidebarMenuButton>
-            </SidebarMenuItem>
-            <SidebarMenuItem>
-              <SidebarMenuButton asChild tooltip="History">
-                <Link href="#"><History /></Link>
-              </SidebarMenuButton>
-            </SidebarMenuItem>
-             <SidebarMenuItem>
-              <SidebarMenuButton asChild tooltip="Settings">
-                <Link href="#"><Settings /></Link>
-              </SidebarMenuButton>
-            </SidebarMenuItem>
           </SidebarMenu>
         </SidebarContent>
       </Sidebar>
