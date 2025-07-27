@@ -11,3 +11,7 @@ A modern and professional starter template built with **Next.js** and **Firebase
 - **Vercel (CI/CD & Hosting Preview)**
 
 ## 📁 Project Structure
+
+👨‍💻 Author
+Built with ❤️ by Shubham
+
