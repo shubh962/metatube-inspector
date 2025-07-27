@@ -1,5 +1,13 @@
-# Firebase Studio
+# MetaTube Inspector
 
-This is a NextJS starter in Firebase Studio.
+A modern and professional starter template built with **Next.js** and **Firebase Studio**, designed for performance, scalability, and developer experience.
 
-To get started, take a look at src/app/page.tsx.
+## 🚀 Tech Stack
+
+- **Next.js 14+ (App Router)**
+- **TypeScript**
+- **Tailwind CSS**
+- **Firebase Hosting**
+- **Vercel (CI/CD & Hosting Preview)**
+
+## 📁 Project Structure
