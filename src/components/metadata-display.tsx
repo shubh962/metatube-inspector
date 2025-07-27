@@ -48,7 +48,7 @@ ${(snippet.tags || []).join(', ')}
   };
 
   return (
-    <Card className="w-full animate-fade-in shadow-none border-0 text-left">
+    <Card className="w-full animate-fade-in shadow-none border-0 text-left bg-transparent">
       <div className="flex justify-between items-start gap-4 mb-6">
           <div className="flex-1">
               <h2 className="text-2xl font-bold tracking-tight">{snippet.title}</h2>
@@ -124,11 +124,11 @@ function ThumbnailImage({ src, title }: { src: string; title: string }) {
                 alt={`${title} thumbnail`}
                 width={480}
                 height={360}
-                className="w-full h-auto object-cover border-2 border-transparent group-hover:border-primary group-hover:scale-105 transition-all duration-300"
+                className="w-full h-auto object-cover border-2 border-border group-hover:border-primary group-hover:scale-105 transition-all duration-300"
                 unoptimized
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent group-hover:from-black/50 transition-colors"></div>
-            <div className="absolute bottom-0 left-0 right-0 p-2 text-white text-xs text-center font-semibold">
+            <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+            <div className="absolute bottom-0 left-0 right-0 p-2 text-white text-xs text-center font-semibold opacity-0 group-hover:opacity-100 transition-opacity translate-y-2 group-hover:translate-y-0">
                 {title}
             </div>
         </a>

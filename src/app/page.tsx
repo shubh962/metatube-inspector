@@ -9,7 +9,7 @@ import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { useToast } from "@/hooks/use-toast";
-import { AlertTriangle, KeyRound, Loader2, Search, Youtube, UploadCloud, History, Settings } from "lucide-react";
+import { AlertTriangle, KeyRound, Loader2, Search, Youtube, UploadCloud, History, Settings, Home as HomeIcon } from "lucide-react";
 import Link from 'next/link';
 
 import { MetadataDisplay } from "@/components/metadata-display";
@@ -75,16 +75,16 @@ export default function Home() {
     <div className="flex min-h-screen w-full flex-col bg-background text-foreground">
       <Sidebar side="left" collapsible="icon" className="border-r">
         <SidebarHeader>
-          <div className="flex h-10 items-center gap-2 p-2 justify-center group-data-[collapsible=icon]:hidden">
-             <Youtube className="h-6 w-6 text-primary" />
-             <span className="font-bold text-lg">MetaTube</span>
+          <div className="flex h-14 items-center gap-2 p-2 justify-center group-data-[collapsible=icon]:hidden">
+             <Youtube className="h-7 w-7 text-primary" />
+             <span className="font-bold text-xl">MetaTube</span>
           </div>
         </SidebarHeader>
         <SidebarContent>
           <SidebarMenu>
             <SidebarMenuItem>
               <SidebarMenuButton asChild isActive tooltip="Home">
-                <Link href="#"><UploadCloud /></Link>
+                <Link href="#"><HomeIcon /></Link>
               </SidebarMenuButton>
             </SidebarMenuItem>
             <SidebarMenuItem>
@@ -101,11 +101,11 @@ export default function Home() {
         </SidebarContent>
       </Sidebar>
       
-      <div className="flex flex-col flex-1 md:pl-[3rem]">
+      <div className="flex flex-col flex-1 md:pl-[calc(var(--sidebar-width-icon)_-_1rem)]">
         <header className="sticky top-0 z-10 flex h-14 items-center gap-4 border-b bg-background/80 backdrop-blur-sm px-4 lg:h-[60px] lg:px-6">
             <SidebarTrigger className="md:hidden"/>
             <h1 className="text-lg font-semibold md:text-xl">
-              YouTube Metadata Extractor
+              YouTube Metadata Inspector
             </h1>
             <div className="ml-auto">
               <ThemeToggle />
@@ -117,9 +117,8 @@ export default function Home() {
           </div>
           <div
             className="flex flex-1 items-center justify-center rounded-lg border border-dashed shadow-sm"
-            x-chunk="dashboard-02-chunk-1"
           >
-            <div className="flex flex-col items-center gap-1 text-center w-full max-w-2xl p-8">
+            <div className="flex flex-col items-center gap-1 text-center w-full max-w-2xl p-4 md:p-8">
               {!metadata && !isPending && !error &&
                 <WelcomeMessage onUrlSubmit={(url) => {
                   setUrl(url);
@@ -147,8 +146,8 @@ export default function Home() {
                   <AlertTitle>Configuration Needed: YouTube API Key</AlertTitle>
                   <AlertDescription>
                     <p>The YouTube API key is missing. To use this application, you need to provide your own API key.</p>
-                    <ol className="list-decimal pl-5 mt-2 space-y-1">
-                      <li>Create a file named <strong>.env.local</strong> in the root of your project. The filename must be exactly <strong>.env.local</strong>.</li>
+                    <ol className="list-decimal pl-5 mt-2 space-y-1 text-left">
+                      <li>Create a file named <strong>.env.local</strong> in the root of your project.</li>
                       <li>Add the following line to it: <pre className="my-2 p-2 bg-muted rounded-md text-sm"><code>YOUTUBE_API_KEY=YOUR_API_KEY_HERE</code></pre></li>
                       <li>Replace <strong>YOUR_API_KEY_HERE</strong> with your actual YouTube Data API v3 key.</li>
                       <li>Restart the application for the changes to take effect.</li>
@@ -163,9 +162,7 @@ export default function Home() {
           </div>
         </main>
       </div>
-      
     </div>
     </SidebarProvider>
   );
 }
-

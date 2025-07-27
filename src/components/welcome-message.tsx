@@ -3,6 +3,7 @@ import { Button } from './ui/button';
 import { Input } from './ui/input';
 import { Separator } from './ui/separator';
 import React from 'react';
+import { Card } from './ui/card';
 
 interface WelcomeMessageProps {
     onUrlSubmit: (url: string) => void;
@@ -19,35 +20,27 @@ export function WelcomeMessage({ onUrlSubmit }: WelcomeMessageProps) {
   }
 
   return (
-    <div className="flex flex-col items-center justify-center rounded-lg w-full text-center animate-fade-in p-4">
-      <div className="flex h-16 w-16 items-center justify-center rounded-full bg-primary/10 mb-4">
+    <Card className="flex flex-col items-center justify-center rounded-xl w-full text-center animate-fade-in p-8 shadow-none border-0 bg-transparent">
+      <div className="flex h-16 w-16 items-center justify-center rounded-full bg-primary/10 mb-4 ring-8 ring-primary/5">
         <UploadCloud className="h-8 w-8 text-primary" />
       </div>
-      <h3 className="text-2xl font-semibold tracking-tight text-card-foreground">
-        Drop your file here or paste a URL
+      <h3 className="text-2xl font-bold tracking-tight text-card-foreground">
+        Extract YouTube Video Metadata
       </h3>
       <p className="mt-2 text-base text-muted-foreground max-w-md">
-        Upload a file (PDF, image, video) or provide a link to extract its metadata instantly.
+        Paste a YouTube link below to instantly pull its title, description, thumbnails, tags, and more.
       </p>
 
-      <div className="mt-6 w-full max-w-sm">
-        <Button className="w-full h-12 text-base" onClick={() => document.getElementById('file-upload')?.click()}>
-            <UploadCloud className="mr-2"/>
-            Select File
-        </Button>
-        <input id="file-upload" type="file" className="hidden" />
-      </div>
-
-      <div className="my-6 flex items-center w-full max-w-sm">
+      <div className="my-8 flex items-center w-full max-w-sm">
         <Separator className="flex-1"/>
-        <span className="px-4 text-sm text-muted-foreground">OR</span>
+        <span className="px-4 text-sm font-semibold text-muted-foreground">PASTE URL</span>
         <Separator className="flex-1"/>
       </div>
       
       <form onSubmit={handleUrlSubmit} className="w-full max-w-sm flex items-center space-x-2">
         <Input
             type="url"
-            placeholder="e.g., https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+            placeholder="e.g., https://www.youtube.com/watch?v=..."
             className="h-12 text-base"
             value={url}
             onChange={(e) => setUrl(e.target.value)}
@@ -57,6 +50,6 @@ export function WelcomeMessage({ onUrlSubmit }: WelcomeMessageProps) {
             <span className="sr-only">Submit URL</span>
         </Button>
       </form>
-    </div>
+    </Card>
   );
 }
