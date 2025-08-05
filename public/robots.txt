@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://metatube-inspector.vercel.app/sitemap.xml
