@@ -1,4 +1,4 @@
-import type {Metadata} from 'next';
+import type { Metadata } from 'next';
 import './globals.css';
 import { Toaster } from "@/components/ui/toaster"
 import { Inter } from 'next/font/google'
@@ -7,6 +7,7 @@ import { ThemeProvider } from '@/components/theme-provider';
 import { SocialBarAd } from '@/components/social-bar-ad';
 
 const inter = Inter({ subsets: ['latin'], variable: "--font-sans" })
+
 export const metadata: Metadata = {
   title: 'MetaTube Inspector – Extract YouTube Metadata Instantly',
   description: 'MetaTube Inspector lets you extract titles, thumbnails, tags, and full metadata from any YouTube video. 100% free, fast & easy to use.',
@@ -17,7 +18,23 @@ export const metadata: Metadata = {
     'YouTube description parser',
     'meta tag finder for YouTube',
     'YouTube title fetcher',
-    'MetaTube Inspector'
+    'MetaTube Inspector',
+    // 🔥 New SEO-researched keywords
+    'YouTube metadata viewer',
+    'online YouTube metadata extractor',
+    'free YouTube metadata tool',
+    'fetch YouTube video tags',
+    'get YouTube video description',
+    'extract YouTube thumbnail',
+    'analyze YouTube metadata',
+    'YouTube video metadata checker',
+    'YouTube SEO tool free',
+    'download YouTube metadata',
+    'check YouTube video tags',
+    'YouTube metadata analysis tool',
+    'YouTube keyword extractor',
+    'YouTube tag generator',
+    'YouTube SEO metadata viewer'
   ],
   robots: 'index, follow',
   verification: {
@@ -38,6 +55,7 @@ export const metadata: Metadata = {
     description: 'Extract YouTube video titles, descriptions, tags, and thumbnails instantly. Built for creators & researchers.',
   },
 };
+
 export default function RootLayout({
   children,
 }: Readonly<{
