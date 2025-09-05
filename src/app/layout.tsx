@@ -33,7 +33,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Free Metadata Extractor Online | TaskGuru Tools",
     description: "Extract, analyze and view file metadata instantly with our free online metadata extractor.",
-    url: "https://www.taskguru.online",
+    url: "https://metatube-inspector.vercel.app/",
     siteName: "TaskGuru",
     type: "website",
   },
