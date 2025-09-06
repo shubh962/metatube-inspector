@@ -33,9 +33,12 @@ export const metadata: Metadata = {
     title: "Free Metadata Extractor Online",
     description:
       "Extract, analyze and view file metadata instantly with our free online metadata extractor.",
-    url: "https://your-website.com/", // <-- yahan future domain dalna
-    siteName: "Your Website Name",   // <-- yahan website ka naam dalna
+    url: "https://metatube-inspector.vercel.app/",
+    siteName: "MetaTube Inspector",
     type: "website",
+  },
+  icons: {
+    icon: "/favicon.ico?v=2",
   },
 };
 
@@ -52,6 +55,9 @@ export default function RootLayout({
           name="google-site-verification"
           content="XhRtp6rO2MNQX-BucHlUxVhNLbBPfdis_RzXY5ZodlU"
         />
+
+        {/* ✅ Extra fallback for favicon */}
+        <link rel="icon" href="/favicon.ico?v=2" />
       </head>
       <body>
         <Header />
@@ -146,7 +152,7 @@ export default function RootLayout({
               photographers, students, security experts, and anyone curious
               about file information. Start using{" "}
               <a
-                href="https://your-website.com"
+                href="https://metatube-inspector.vercel.app"
                 className="text-blue-600 font-semibold"
               >
                 Our Metadata Extractor
