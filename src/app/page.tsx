@@ -12,23 +12,12 @@ import { LoadingSkeleton } from "@/components/loading-skeleton";
 import { WelcomeMessage } from "@/components/welcome-message";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { AdScript } from "@/components/ad-script";
-import { Metadata } from 'next'; // Next.js Metadata Type
+// import { Metadata } from 'next'; // <-- REMOVED: Metadata import is no longer needed here
 
-export const metadata: Metadata = {
-  // Keyword-rich title for better SEO ranking
-  title: 'MetaTube Inspector - Free YouTube Metadata, Tags & SEO Checker',
-  
-  // Clear and descriptive meta description for search snippets (AdSense friendly content)
-  description: 'Instantly inspect and analyze any YouTube video\'s metadata, tags, description, and SEO details. Optimize your video content and strategy with our free MetaTube Inspector tool.',
-  
-  // Important keywords
-  keywords: ['YouTube metadata checker', 'YouTube SEO tool', 'video tag extractor', 'MetaTube Inspector', 'YouTube analyzer', 'YouTube video details'],
-  
-  // Set a canonical URL
-  alternates: {
-    canonical: 'https://metatube-inspector.vercel.app/',
-  },
-};
+// =================================================================
+// NOTE: The 'export const metadata' block has been removed
+// and placed into src/app/page.ts to fix the Vercel build error.
+// =================================================================
 
 export default function Home() {
   const [url, setUrl] = useState("");
@@ -101,7 +90,6 @@ export default function Home() {
       <main className="w-full max-w-6xl flex-1 flex flex-col items-center">
         
         {/* 🚀 SEO Improvement: Visually Hidden H1 for Google */}
-        {/* This H1 uses the same SEO title but is hidden using Tailwind's 'sr-only' class, ensuring a clean UX. */}
         <h1 className="sr-only">MetaTube Inspector: Free YouTube Video Metadata, Tags & SEO Checker</h1>
 
         {showWelcome && <WelcomeMessage onUrlSubmit={handleSubmit} />}
