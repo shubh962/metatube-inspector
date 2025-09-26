@@ -1,3 +1,4 @@
+// src/app/page.tsx
 "use client";
 
 import { useState, useTransition, useCallback } from "react";
@@ -11,6 +12,23 @@ import { LoadingSkeleton } from "@/components/loading-skeleton";
 import { WelcomeMessage } from "@/components/welcome-message";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { AdScript } from "@/components/ad-script";
+import { Metadata } from 'next'; // Next.js Metadata Type
+
+export const metadata: Metadata = {
+  // Keyword-rich title for better SEO ranking
+  title: 'MetaTube Inspector - Free YouTube Metadata, Tags & SEO Checker',
+  
+  // Clear and descriptive meta description for search snippets (AdSense friendly content)
+  description: 'Instantly inspect and analyze any YouTube video\'s metadata, tags, description, and SEO details. Optimize your video content and strategy with our free MetaTube Inspector tool.',
+  
+  // Important keywords
+  keywords: ['YouTube metadata checker', 'YouTube SEO tool', 'video tag extractor', 'MetaTube Inspector', 'YouTube analyzer', 'YouTube video details'],
+  
+  // Set a canonical URL
+  alternates: {
+    canonical: 'https://metatube-inspector.vercel.app/',
+  },
+};
 
 export default function Home() {
   const [url, setUrl] = useState("");
@@ -66,20 +84,30 @@ export default function Home() {
 
   return (
     <div className="flex min-h-screen w-full flex-col items-center bg-background p-4 sm:p-6 md:p-8">
+      
+      {/* HEADER: Clean Branding */}
       <header className="w-full max-w-6xl flex items-center justify-between pb-4">
-        <h1 className="text-2xl font-bold text-foreground">
-          MetaTube Inspector
-        </h1>
+        <div className="flex items-center space-x-2">
+            <span className="text-2xl font-bold text-foreground">MetaTube Inspector</span>
+        </div>
         <ThemeToggle />
       </header>
-
-      <div className="w-full py-4">
-        <AdScript />
+      
+      {/* 💡 AdSense Improvement: Place AdScript here. It's visible but doesn't block the main tool interaction */}
+      <div className="w-full py-4 max-w-6xl">
+        <AdScript /> 
       </div>
 
       <main className="w-full max-w-6xl flex-1 flex flex-col items-center">
+        
+        {/* 🚀 SEO Improvement: Visually Hidden H1 for Google */}
+        {/* This H1 uses the same SEO title but is hidden using Tailwind's 'sr-only' class, ensuring a clean UX. */}
+        <h1 className="sr-only">MetaTube Inspector: Free YouTube Video Metadata, Tags & SEO Checker</h1>
+
         {showWelcome && <WelcomeMessage onUrlSubmit={handleSubmit} />}
+        
         {isPending && <LoadingSkeleton />}
+        
         {error && !isPending && !isApiKeyMissing && (
           <Alert variant="destructive" className="animate-fade-in w-full max-w-4xl">
             <AlertTriangle className="h-4 w-4" />
@@ -87,23 +115,25 @@ export default function Home() {
             <AlertDescription>{error}</AlertDescription>
           </Alert>
         )}
+        
+        {/* 💡 UX/AdSense Improvement: General error message for missing API key in production */}
         {isApiKeyMissing && (
           <Alert variant="destructive" className="animate-fade-in w-full max-w-4xl">
             <KeyRound className="h-4 w-4" />
-            <AlertTitle>Configuration Needed: YouTube API Key</AlertTitle>
+            <AlertTitle>Service Temporarily Unavailable</AlertTitle>
             <AlertDescription>
-              <p>The YouTube API key is missing. To use this application, you need to provide your own API key.</p>
-              <ol className="list-decimal pl-5 mt-2 space-y-1">
-                <li>Create a file named <strong>.env.local</strong> in the root of your project.</li>
-                <li>Add the following line to it: <pre className="my-2 p-2 bg-muted rounded-md text-sm"><code>YOUTUBE_API_KEY=YOUR_API_KEY_HERE</code></pre></li>
-                <li>Replace <strong>YOUR_API_KEY_HERE</strong> with your actual YouTube Data API v3 key.</li>
-                <li>Restart the application for the changes to take effect.</li>
-              </ol>
+              <p>We're experiencing a configuration issue. Please try analyzing your video again later.</p>
             </AlertDescription>
           </Alert>
         )}
+        
         {metadata && !isPending && <MetadataDisplay data={metadata} onNewUrl={() => { setMetadata(null); setUrl(""); }} />}
       </main>
+      
+      {/* <footer> is good practice for AdSense friendliness and basic site structure */}
+      <footer className="w-full max-w-6xl mt-8 text-center text-sm text-muted-foreground">
+        &copy; {new Date().getFullYear()} MetaTube Inspector. All rights reserved.
+      </footer>
     </div>
   );
 }
