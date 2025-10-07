@@ -41,12 +41,8 @@ export const metadata: Metadata = {
   icons: {
     icon: "/favicon.ico?v=2",
   },
-  {<meta name="google-site-verification" content="XhRtp6rO2MNQX-BucHlUxVhNLbBPfdis_RzXY5ZodlU" />};
+  
 };
-
-// =================================================================
-// 💡 RootLayout Component
-// =================================================================
 export default function RootLayout({
   children,
 }: {
