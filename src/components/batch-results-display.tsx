@@ -7,6 +7,9 @@ import { ListOrdered, XCircle, FileDown, Repeat2 } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { MetadataDisplay } from "@/components/metadata-display"; // Import existing single video display component
+// --- ZAROORI FIX: Yeh teen imports add karein ---
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"; // FIX: Alert components are now imported
+// ------------------------------------------------
 
 interface BatchResultsDisplayProps {
   data: YouTubeVideo[];
