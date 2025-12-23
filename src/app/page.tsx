@@ -5,7 +5,7 @@ import { getYouTubeVideoMetadata, type YouTubeVideo } from "@/app/actions";
 import { extractYouTubeVideoId } from "@/lib/utils";
 import { useToast } from "@/hooks/use-toast";
 
-// UI Components
+// UI Component
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { 
   AlertTriangle, KeyRound, Zap, Search, Info, ShieldCheck, 
