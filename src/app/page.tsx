@@ -66,19 +66,6 @@ export default function Home() {
 
   return (
     <div className="flex min-h-screen w-full flex-col items-center bg-background text-foreground">
-      
-      {/* HEADER */}
-      <header className="w-full border-b bg-background/95 backdrop-blur sticky top-0 z-50">
-        <div className="max-w-6xl mx-auto flex h-16 items-center justify-between px-6">
-          <div className="flex items-center space-x-2 cursor-pointer" onClick={resetState}>
-            <Zap className="h-6 w-6 text-primary fill-current" />
-            <span className="text-xl font-bold tracking-tight">MetaTube Inspector</span>
-          </div>
-          <ThemeToggle />
-        </div>
-      </header>
-      
-      <main className="w-full max-w-6xl flex-1 flex flex-col items-center px-6 py-12">
         
         {/* HERO SECTION */}
         <section className="text-center mb-16 space-y-4">
