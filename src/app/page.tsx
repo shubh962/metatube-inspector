@@ -5,20 +5,17 @@ import { getYouTubeVideoMetadata, type YouTubeVideo } from "@/app/actions";
 import { extractYouTubeVideoId } from "@/lib/utils";
 import { useToast } from "@/hooks/use-toast";
 
-// UI Component
+// UI Components
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { 
-  AlertTriangle, KeyRound, Zap, Search, Info, ShieldCheck, 
-  BarChart3, Globe, Users, PlayCircle, Star, ArrowRight 
+  AlertTriangle, Zap, Search, Info, ShieldCheck, 
+  BarChart3, PlayCircle, ArrowRight 
 } from "lucide-react";
 import { MetadataDisplay } from "@/components/metadata-display";
 import { LoadingSkeleton } from "@/components/loading-skeleton";
 import { WelcomeMessage } from "@/components/welcome-message";
-import { ThemeToggle } from "@/components/theme-toggle";
-import { AdScript } from "@/components/ad-script";
-import { BatchResultsDisplay } from "@/components/batch-results-display";
 
-type ResultState = "input" | "loading" | "error" | "single_result" | "batch_results";
+type ResultState = "input" | "loading" | "error" | "single_result";
 
 export default function Home() {
   const [url, setUrl] = useState("");
@@ -60,16 +57,19 @@ export default function Home() {
     ? "loading" 
     : metadata.length === 1 
       ? "single_result" 
-      : metadata.length > 1 
-        ? "batch_results" 
-        : error ? "error" : "input";
+      : error ? "error" : "input";
 
   return (
     <div className="flex min-h-screen w-full flex-col items-center bg-background text-foreground">
+      {/* IMPORTANT: Header aur Footer ab layout.tsx se handle ho rahe hain.
+          Is file mein sirf Main Content rahega.
+      */}
+      
+      <main className="w-full max-w-6xl flex-1 flex flex-col items-center px-6 py-12">
         
         {/* HERO SECTION */}
-        <section className="text-center mb-16 space-y-4">
-          <h1 className="text-5xl font-extrabold tracking-tighter sm:text-6xl italic italic-none">
+        <section className="text-center mb-16 space-y-4 pt-8">
+          <h1 className="text-5xl font-extrabold tracking-tighter sm:text-7xl">
             Unlock the DNA of <span className="text-primary">YouTube SEO</span>
           </h1>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto font-medium">
@@ -91,90 +91,61 @@ export default function Home() {
           {resultState === "single_result" && <MetadataDisplay data={metadata[0]} onNewUrl={resetState} />}
         </div>
 
-        {/* --- 1000+ WORDS OF HUMAN-TONE SEO CONTENT --- */}
-        <article className="prose prose-slate dark:prose-invert max-w-none w-full border-t pt-16 space-y-12">
+        {/* SEO CONTENT SECTION (AdSense Booster) */}
+        <article className="prose prose-slate dark:prose-invert max-w-none w-full border-t pt-16 space-y-16">
           
-          <section>
-            <h2 className="text-3xl font-bold text-foreground">Why Metadata is the Secret Sauce of YouTube Growth in 2025</h2>
+          <section className="space-y-6">
+            <h2 className="text-4xl font-bold text-foreground">Why Metadata is the Secret Sauce of YouTube Growth in 2026</h2>
             <p className="text-lg leading-relaxed text-muted-foreground">
-              If you’ve ever wondered why some videos with mediocre content get millions of views while your high-production masterpiece sits at zero, the answer is rarely "luck." It’s <strong>Metadata Integrity</strong>. In the 2025 YouTube landscape, the algorithm doesn't just "watch" your video; it digests your title, your description, and your underlying tags to build a semantic profile of who your audience should be.
-            </p>
-            <p className="text-lg leading-relaxed text-muted-foreground">
-              Our <strong>MetaTube Inspector</strong> tool was built to pull back the curtain on this process. By analyzing how top-tier creators structure their information, you can stop guessing and start ranking. This isn't just about "keyword stuffing"—it's about relevance, context, and intent.
+              In the modern YouTube ecosystem, the algorithm relies on <strong>Metadata Integrity</strong>. Titles, descriptions, and tags create a semantic map that tells YouTube who your audience is. At <strong>TaskGuru</strong>, we built MetaTube Inspector to give you a professional edge.
             </p>
           </section>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 py-8">
-            <div className="bg-muted/50 p-8 rounded-2xl border">
-              <h3 className="text-xl font-bold mb-4 flex items-center gap-2"><BarChart3 className="text-primary" /> The Power of Hidden Tags</h3>
-              <p className="text-sm text-muted-foreground italic leading-6">
-                While YouTube has stated that tags play a "minimal role," the truth is more nuanced. Tags are the bridges that connect your video to <strong>Suggested Video</strong> sidebars. When your tags align with a viral video in your niche, you increase your chances of appearing in that coveted "Next Up" slot. MetaTube Inspector extracts these hidden tags so you can see the categorization strategy of your competitors.
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-10 py-8">
+            <div className="bg-muted/50 p-10 rounded-3xl border border-primary/10">
+              <h3 className="text-2xl font-bold mb-4 flex items-center gap-2"><BarChart3 className="text-primary" /> Hidden Tag Analysis</h3>
+              <p className="text-muted-foreground leading-relaxed">
+                Tags are the contextual bridges to the "Suggested Video" sidebar. Aligning your tags with viral leaders in your niche increases your discovery chances mathematically.
               </p>
             </div>
-            <div className="bg-muted/50 p-8 rounded-2xl border">
-              <h3 className="text-xl font-bold mb-4 flex items-center gap-2"><PlayCircle className="text-primary" /> Thumbnail & CTR Optimization</h3>
-              <p className="text-sm text-muted-foreground leading-6">
-                Your thumbnail is your billboard. If people don't click, your metadata doesn't matter. We allow you to view and download the original high-resolution thumbnails of any video. Analyze the color contrast, font choices, and facial expressions that drive clicks in 2025. Remember: Red, Black, and White are the "BOGY" colors that traditionally trigger higher neural responses in viewers.
+            <div className="bg-muted/50 p-10 rounded-3xl border border-primary/10">
+              <h3 className="text-2xl font-bold mb-4 flex items-center gap-2"><PlayCircle className="text-primary" /> CTR Optimization</h3>
+              <p className="text-muted-foreground leading-relaxed">
+                Your thumbnail is your first impression. Inspect original high-res thumbnails to study color psychology and neuro-visual triggers that drive high click-through rates.
               </p>
             </div>
           </div>
 
-          <section className="space-y-6">
-            <h2 className="text-3xl font-bold text-foreground italic-none">Step-by-Step Guide to Ranking Your Videos Higher</h2>
-            <p className="text-muted-foreground">To maximize your reach, follow this "Gold Standard" optimization workflow used by professional SEO agencies:</p>
-            
-            <div className="space-y-8">
+          <section className="space-y-8">
+            <h2 className="text-3xl font-bold text-foreground">Step-by-Step Video SEO Guide</h2>
+            <div className="grid gap-6">
               {[
-                { title: "Primary Keyword Placement", desc: "Your main keyword must appear within the first 60 characters of your title. This ensures it isn't truncated on mobile devices." },
-                { title: "The 25-Word Rule", desc: "YouTube gives the most weight to the first 25 words of your description. State exactly what the video is about and include your target keyword twice." },
-                { title: "Timestamping (Key Moments)", desc: "Adding timestamps doesn't just help users; it helps Google Search index specific 'segments' of your video, allowing you to occupy more real estate on the Search Results Page (SERP)." },
-                { title: "Semantic Variations", desc: "Don't just repeat one keyword. Use synonyms. If you're targeting 'SEO,' also use 'Search Optimization' and 'Organic Traffic' to help the AI understand context." }
-              ].map((item, i) => (
-                <div key={i} className="flex gap-4">
-                  <div className="flex-none w-8 h-8 rounded-full bg-primary/20 text-primary flex items-center justify-center font-bold">{i+1}</div>
+                { t: "Primary Keyword Placement", d: "Keep your target keyword within the first 60 characters of your title for maximum mobile impact." },
+                { t: "Description Front-Loading", d: "The first 25 words of your description are the most heavily weighted by the search engine." },
+                { t: "Semantic Diversity", d: "Use synonyms and related long-tail keywords to help the AI categorize your video accurately." }
+              ].map((item, idx) => (
+                <div key={idx} className="flex gap-4 p-6 bg-card border rounded-2xl border-primary/5 hover:border-primary/20 transition-all">
+                  <div className="h-8 w-8 rounded-full bg-primary/20 text-primary flex items-center justify-center font-bold">{idx+1}</div>
                   <div>
-                    <h4 className="font-bold text-lg">{item.title}</h4>
-                    <p className="text-muted-foreground">{item.desc}</p>
+                    <h4 className="font-bold text-xl">{item.t}</h4>
+                    <p className="text-muted-foreground">{item.d}</p>
                   </div>
                 </div>
               ))}
             </div>
           </section>
 
-          <section className="bg-primary/5 border border-primary/20 p-10 rounded-3xl relative overflow-hidden">
-            <div className="relative z-10">
-              <h2 className="text-2xl font-bold mb-4 italic italic-none">Metadata Mistakes to Avoid in 2025</h2>
-              <ul className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm text-muted-foreground">
-                <li className="flex items-start gap-2"><ArrowRight className="h-4 w-4 text-primary mt-1" /> Misleading Thumbnails (Clickbait)</li>
-                <li className="flex items-start gap-2"><ArrowRight className="h-4 w-4 text-primary mt-1" /> Over-tagging (Keep it under 15 tags)</li>
-                <li className="flex items-start gap-2"><ArrowRight className="h-4 w-4 text-primary mt-1" /> Ignoring Mobile Legibility</li>
-                <li className="flex items-start gap-2"><ArrowRight className="h-4 w-4 text-primary mt-1" /> Forgetting a Call to Action (CTA)</li>
-                <li className="flex items-start gap-2"><ArrowRight className="h-4 w-4 text-primary mt-1" /> No Video Schema/JSON-LD</li>
-                <li className="flex items-start gap-2"><ArrowRight className="h-4 w-4 text-primary mt-1" /> Automated/Bot-generated Descriptions</li>
-              </ul>
-            </div>
-            <div className="absolute top-0 right-0 p-4 opacity-10">
-              <ShieldCheck size={120} />
-            </div>
-          </section>
-
-          <section className="text-center py-10">
-            <h2 className="text-3xl font-bold mb-4 italic italic-none">Frequently Asked Questions</h2>
+          <section className="text-center py-12">
+            <h2 className="text-3xl font-bold mb-10">Frequently Asked Questions</h2>
             <div className="max-w-3xl mx-auto space-y-6 text-left">
-              <details className="group border-b pb-4 cursor-pointer">
-                <summary className="font-bold text-lg list-none flex justify-between items-center">
-                  How does MetaTube Inspector help with Jellyfin or Plex?
-                  <span className="group-open:rotate-180 transition-transform">▼</span>
-                </summary>
-                <p className="mt-4 text-muted-foreground">Media servers like Jellyfin use plugins to scrape metadata. If your files aren't matching, our inspector lets you see exactly what the API is seeing, allowing you to fix naming conventions and ID mismatches instantly.</p>
-              </details>
-              <details className="group border-b pb-4 cursor-pointer">
-                <summary className="font-bold text-lg list-none flex justify-between items-center">
-                  Is it safe to copy tags from other creators?
-                  <span className="group-open:rotate-180 transition-transform">▼</span>
-                </summary>
-                <p className="mt-4 text-muted-foreground">Yes, it is common practice to analyze and adapt tags. However, never copy them 1:1. Always ensure the tags accurately reflect your specific content to avoid "misleading metadata" penalties from YouTube.</p>
-              </details>
+              <div className="border-b pb-6">
+                <h4 className="font-bold text-xl mb-2">Is it safe to copy tags?</h4>
+                <p className="text-muted-foreground">Yes, researching competitor tags is standard practice. Ensure they remain relevant to your content to avoid metadata penalties.</p>
+              </div>
+              <div className="border-b pb-6">
+                <h4 className="font-bold text-xl mb-2">How does the tool fetch data?</h4>
+                <p className="text-muted-foreground">We use the official YouTube Data API v3 to ensure 100% accurate and real-time metadata extraction.</p>
+              </div>
             </div>
           </section>
 
