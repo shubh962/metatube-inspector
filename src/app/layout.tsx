@@ -1,8 +1,9 @@
 import type { Metadata, Viewport } from "next";
-import { Inter } from "next/font/google"; // Optimized Font
+import { Inter } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "@/components/ui/toaster";
 import Header from "@/components/Header";
+import Link from "next/link"; // Use Next.js Link for better SEO performance
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -49,8 +50,6 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  // Schema.org JSON-LD for "Software Application" 
-  // This helps Google show your tool with a special "App" snippet
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "SoftwareApplication",
@@ -77,20 +76,49 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
-      <body className={`${inter.className} min-h-screen flex flex-col`}>
+      <body className={`${inter.className} min-h-screen flex flex-col antialiased`}>
         <Header />
 
         <main className="container mx-auto p-4 flex-1">
           {children}
         </main>
         
-        <footer className="w-full text-center py-8 border-t mt-12 text-sm text-muted-foreground bg-muted/20">
-            <div className="flex flex-col gap-2">
-              <p>&copy; {new Date().getFullYear()} MetaTube Inspector. All Rights Reserved.</p>
-              <div className="flex justify-center gap-4 text-xs">
-                <a href="#" className="hover:text-primary underline underline-offset-4">Privacy Policy</a>
-                <a href="#" className="hover:text-primary underline underline-offset-4">Terms of Service</a>
-                <a href="https://github.com/shubh962/metatube-inspector" className="hover:text-primary underline underline-offset-4">GitHub</a>
+        <footer className="w-full text-center py-12 border-t mt-12 bg-muted/10">
+            <div className="container mx-auto px-4 flex flex-col gap-6">
+              <div className="space-y-2">
+                <p className="font-semibold text-lg text-foreground">MetaTube Inspector</p>
+                <p className="text-sm text-muted-foreground max-w-md mx-auto">
+                  Helping creators optimize their reach through transparent metadata analysis.
+                </p>
+              </div>
+
+              {/* Navigation Links - AdSense Requirement */}
+              <nav className="flex flex-wrap justify-center gap-x-6 gap-y-2 text-sm font-medium">
+                <Link href="/about" className="hover:text-primary transition-colors">About</Link>
+                <Link href="/contact" className="hover:text-primary transition-colors">Contact</Link>
+                <Link href="/privacy-policy" className="hover:text-primary transition-colors">Privacy Policy</Link>
+                <Link href="/terms-of-service" className="hover:text-primary transition-colors">Terms of Service</Link>
+              </nav>
+
+              <div className="flex flex-col gap-4 pt-4 border-t border-muted">
+                <div className="flex justify-center items-center gap-4 text-xs text-muted-foreground">
+                  <p>&copy; {new Date().getFullYear()} MetaTube Inspector.</p>
+                  <span>•</span>
+                  <a href="https://github.com/shubh962/metatube-inspector" target="_blank" rel="noreferrer" className="hover:text-primary underline underline-offset-4">GitHub Repository</a>
+                </div>
+
+                {/* TaskGuru Integration */}
+                <p className="text-xs text-muted-foreground/80">
+                  A project by{" "}
+                  <a 
+                    href="https://www.taskguru.online/" 
+                    target="_blank" 
+                    rel="noopener noreferrer" 
+                    className="text-primary font-semibold hover:underline"
+                  >
+                    TaskGuru Online
+                  </a>
+                </p>
               </div>
             </div>
         </footer>
