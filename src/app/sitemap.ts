@@ -1,10 +1,7 @@
 import { MetadataRoute } from "next";
-
-// 1. Apne naye Blogs yahan add karte rahein
 const blogSlugs = [
   "how-to-find-youtube-tags",
   "thumbnail-psychology-guide",
-  // "future-blog-slug-here",
 ];
 
 // 2. Apne naye Tools yahan add karte rahein
