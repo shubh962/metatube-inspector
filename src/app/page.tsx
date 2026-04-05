@@ -193,42 +193,6 @@ export default function Home() {
 
         </article>
       </main>
-
-      {/* FOOTER */}
-     {/* UPDATED FOOTER FOR ADSENSE COMPLIANCE */}
-      <footer className="w-full border-t bg-muted/30 py-16 mt-20">
-        <div className="max-w-6xl mx-auto px-8">
-          <div className="flex flex-col md:flex-row justify-between items-center gap-8 text-center md:text-left">
-            <div className="space-y-3">
-              <div className="flex items-center justify-center md:justify-start gap-2">
-                <Zap className="h-5 w-5 text-primary fill-current" />
-                <p className="font-bold text-lg">MetaTube Inspector</p>
-              </div>
-              <p className="text-xs text-muted-foreground max-w-xs">
-                Empowering creators with high-fidelity SEO data and metadata transparency. 
-                A project by <a href="https://www.taskguru.online/" target="_blank" className="text-primary hover:underline font-semibold">TaskGuru</a>.
-              </p>
-            </div>
-
-            <nav className="flex flex-wrap justify-center gap-6 text-sm font-medium">
-              <a href="/about" className="hover:text-primary transition-colors">About</a>
-              <a href="/contact" className="hover:text-primary transition-colors">Contact</a>
-              <a href="/privacy-policy" className="hover:text-primary transition-colors">Privacy Policy</a>
-              <a href="/terms-of-service" className="hover:text-primary transition-colors">Terms of Service</a>
-            </nav>
-          </div>
-
-          <div className="mt-12 pt-8 border-t border-muted-foreground/10 text-center space-y-2">
-            <p className="text-[10px] uppercase tracking-widest text-muted-foreground/60">
-              &copy; {new Date().getFullYear()} MetaTube Project. All Rights Reserved.
-            </p>
-            <p className="text-[10px] text-muted-foreground/40">
-              Disclaimer: MetaTube Inspector is an independent tool and is not affiliated with, 
-              sponsored by, or endorsed by YouTube or Google LLC.
-            </p>
-          </div>
-        </div>
-      </footer>
     </div>
   );
 }
