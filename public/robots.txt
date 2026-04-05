@@ -1,12 +1,4 @@
-import { MetadataRoute } from 'next'
-
-export default function robots(): MetadataRoute.Robots {
-  return {
-    rules: {
-      userAgent: '*',
-      allow: '/',
-      disallow: ['/api/', '/private/'], // Protects your internal API calls from bots
-    },
-    sitemap: 'https://metatube-inspector.vercel.app/sitemap.xml',
-  }
-}
+User-agent: *
+Allow: /
+Disallow: /api/
+Sitemap: https://metatube-inspector.vercel.app/sitemap.xml
